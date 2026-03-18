@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizApp - Master Your Memory</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glass-bg"></div>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-overlay active">
+        <div class="login-card glass-card">
+            <div class="logo-box">
+                <i class="fa-solid fa-brain"></i>
+            </div>
+            <h2>Welcome to QuizApp</h2>
+            <p style="color: var(--text-muted); margin-top: 0.5rem;">Master your memory effortlessly.</p>
+            <button class="btn btn-primary" id="btn-login" style="margin-top: 2.5rem; width: 100%;">
+                <i class="fa-brands fa-google"></i> Sign in with Google
+            </button>
+            <button class="btn btn-outline" id="btn-login-guest" style="margin-top: 1rem; width: 100%;">
+                Continue as Guest (Local Only)
+            </button>
+        </div>
+    </div>
+
+    <!-- Start Quiz Modal -->
+    <div id="start-modal" class="modal-overlay hidden">
+        <div class="modal-card glass-card">
+            <h3 id="start-modal-title">Quiz Title</h3>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">How many questions would you like to answer?</p>
+            
+            <div class="input-group">
+                <select id="start-question-count" class="form-select">
+                    <!-- Options injected via JS -->
+                </select>
+            </div>
+            
+            <div class="result-actions" style="margin-top: 1rem;">
+                <button class="btn btn-secondary" id="btn-cancel-start">Cancel</button>
+                <button class="btn btn-primary" id="btn-confirm-start">Start Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application UI -->
+    <div class="app-container hidden" id="main-app">
+        <!-- Sidebar / Navigation -->
+        <nav class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-brain"></i>
+                <span>QuizApp</span>
+            </div>
+            <ul class="nav-links">
+                <li class="active" data-tab="dashboard">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Dashboard</span>
+                </li>
+                <li data-tab="create-quiz">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Create Quiz</span>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header>
+                <h1 id="page-title">Dashboard</h1>
+                <div class="user-profile">
+                    <span id="user-display-name" style="margin-right: 1.5rem; font-weight: 500; font-size: 1rem; color: var(--primary);">Guest</span>
+                    <button class="btn btn-secondary" id="btn-logout" title="Logout">
+                        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                    </button>
+                </div>
+            </header>
+
+            <!-- Dashboard View -->
+            <section id="dashboard" class="tab-content active">
+                <div class="stats-row">
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon"><i class="fa-solid fa-layer-group"></i></div>
+                        <div class="stat-info">
+                            <h3>Total Quizzes</h3>
+                            <p id="total-quizzes">0</p>
+                        </div>
+                    </div>
+                    <div class="stat-card glass-card">
+                        <div class="stat-icon"><i class="fa-solid fa-book-open"></i></div>
+                        <div class="stat-info">
+                            <h3>Words Memorized</h3>
+                            <p id="total-words">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-header">
+                    <h2>Your Quizzes</h2>
+                    <button class="btn btn-primary" id="btn-create-new">
+                        <i class="fa-solid fa-plus"></i> New Quiz
+                    </button>
+                </div>
+                
+                <div class="quiz-grid" id="quiz-grid">
+                    <!-- Quizzes will be injected here via JS -->
+                </div>
+            </section>
+
+            <!-- Create/Edit Quiz View -->
+            <section id="create-quiz" class="tab-content">
+                <div class="form-card glass-card">
+                    <h2>Create a New Quiz</h2>
+                    <p class="subtitle">Name your quiz and start adding words, sentences, or data to test yourself.</p>
+                    
+                    <form id="quiz-form">
+                        <div class="input-group">
+                            <label for="quiz-name">Quiz Name</label>
+                            <input type="text" id="quiz-name" placeholder="e.g., Spanish Vocabulary, History Dates..." required>
+                        </div>
+                        <div class="input-group">
+                            <label for="quiz-desc">Description (Optional)</label>
+                            <textarea id="quiz-desc" placeholder="Briefly describe what this quiz is about..."></textarea>
+                        </div>
+                        
+                        <div class="divider"></div>
+
+                        <h3>Add Items (Q&A)</h3>
+                        <div class="add-item-container">
+                            <div class="input-row">
+                                <div class="input-group">
+                                    <label for="item-q">Prompt / Question / Word</label>
+                                    <input type="text" id="item-q" placeholder="e.g., 'Hola'">
+                                </div>
+                                <div class="input-group">
+                                    <label for="item-a">Answer / Meaning</label>
+                                    <input type="text" id="item-a" placeholder="e.g., 'Hello'">
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-secondary" id="btn-add-item">
+                                <i class="fa-solid fa-plus"></i> Add Item
+                            </button>
+                        </div>
+
+                        <!-- ChatGPT Paste Area -->
+                        <div class="chatgpt-import">
+                            <button type="button" class="btn btn-outline" id="toggle-import" style="width: 100%; margin-top: 1rem;">
+                                <i class="fa-solid fa-robot"></i> Import from ChatGPT / List
+                            </button>
+                            <div class="import-panel hidden" id="import-panel" style="margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
+                                <p style="margin-bottom: 0.5rem; color: var(--text-muted);"><small>Format: "1. Question: Answer1 / Answer2, 2. Question: Answer" or separate by lines.</small></p>
+                                <textarea id="bulk-import-text" rows="5" placeholder="1. Hello: Hola / Saludos, 2. Adios: Goodbye" style="width: 100%;"></textarea>
+                                <button type="button" class="btn btn-secondary mt-2" id="btn-process-import">Import</button>
+                            </div>
+                        </div>
+
+                        <div class="items-preview-list" id="items-preview-list">
+                            <!-- Items preview will appear here -->
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-large mt-4">
+                            <i class="fa-solid fa-save"></i> Save Quiz
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Take Quiz View -->
+            <section id="take-quiz" class="tab-content">
+                <div class="quiz-header">
+                    <button class="btn btn-icon" id="btn-back-dashboard">
+                        <i class="fa-solid fa-arrow-left"></i> End Quiz
+                    </button>
+                    <h2 id="active-quiz-title">Quiz Title</h2>
+                    <div class="quiz-meta-info">
+                        <div class="timer" id="quiz-timer"><i class="fa-regular fa-clock"></i> <span id="quiz-timer-text">00:00</span></div>
+                        <div class="progress-text"><span id="current-q-num">1</span> / <span id="total-q-num">10</span></div>
+                    </div>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" id="quiz-progress-fill" style="width: 0%;"></div>
+                </div>
+
+                <div class="question-card glass-card">
+                    <h3 id="question-text">Loading question...</h3>
+                    <div class="options-grid" id="options-grid">
+                        <!-- Options injected here -->
+                    </div>
+                </div>
+
+                <div class="quiz-results glass-card hidden" id="quiz-results">
+                    <h2>Quiz Completed!</h2>
+                    <div class="score-circle">
+                        <span id="final-score">0</span><small>%</small>
+                    </div>
+                    <div class="results-stats">
+                        <div class="stat-box">
+                            <i class="fa-solid fa-check-circle" style="color: var(--secondary); margin-bottom: 0.5rem; font-size: 1.5rem;"></i>
+                            <p>Correct</p>
+                            <strong><span id="score-correct">0</span> / <span id="score-total">0</span></strong>
+                        </div>
+                        <div class="stat-box">
+                            <i class="fa-regular fa-clock" style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.5rem;"></i>
+                            <p>Time Taken</p>
+                            <strong id="score-time">00:00</strong>
+                        </div>
+                    </div>
+                    <p id="score-message">Great job completed the quiz.</p>
+                    <div class="result-actions">
+                        <button class="btn btn-secondary" id="btn-restart-quiz">Restart Setup</button>
+                        <button class="btn btn-primary" id="btn-finish-quiz">Back to Dashboard</button>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Firebase SDK Setup -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
