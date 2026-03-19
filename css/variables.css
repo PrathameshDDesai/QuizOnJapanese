@@ -1,0 +1,85 @@
+/* variables.css – Design Tokens (vibrant Light palette) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* ── Backgrounds (Light Mode) ─────────────────────────────── */
+    --bg-color:      #f8fafc;   /* soft slate white */
+    --surface-color: #ffffff;   /* pure white */
+    --surface-hover: #f1f5f9;
+
+    /* ── Borders ─────────────────────────────────── */
+    --border-color: #e2e8f0;
+    --border-hover: #cbd5e1;
+
+    /* ── Text (Light Mode) ────────────────────────────────────── */
+    --text-primary:   #0f172a;  /* deep slate */
+    --text-secondary: #475569;  /* slate grey */
+    --text-tertiary:  #94a3b8;  /* light grey */
+
+    /* ── Brand Accent (indigo-violet) ────────────── */
+    --accent:       #6366f1;    /* indigo */
+    --accent-hover: #4f46e5;
+    --accent-glow:  rgba(99,102,241,0.1);
+    --accent-soft:  rgba(99,102,241,0.05);
+
+    /* ── Secondary Accent (cyan-teal) ────────────── */
+    --teal:         #0ea5e9;
+    --teal-glow:    rgba(14,165,233,0.1);
+
+    /* ── Tertiary Accent (rose/pink) ─────────────── */
+    --rose:         #ec4899;
+    --rose-glow:    rgba(236,72,153,0.1);
+
+    /* ── Semantic ────────────────────────────────── */
+    --success:       #10b981;
+    --success-glow:  rgba(16,185,129,0.1);
+    --danger:        #ef4444;
+    --danger-hover:  #dc2626;
+    --warning:       #f59e0b;
+
+    /* ── Gradients ────────────────────── */
+    --grad-brand:    linear-gradient(135deg, #6366f1, #8b5cf6, #0ea5e9);
+    --grad-hero:     linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #0ea5e9 100%);
+    --grad-warm:     linear-gradient(135deg, #ec4899, #f97316);
+    --grad-card-top: linear-gradient(90deg, #6366f1, #8b5cf6, #0ea5e9);
+
+    /* ── Sizing ──────────────────────────────────── */
+    --sidebar-width: 260px;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 18px;
+    --radius-xl: 24px;
+
+    /* ── Legacy aliases ── */
+    --primary:    var(--accent);
+    --secondary:  var(--success);
+    --text-muted: var(--text-secondary);
+    --text-main:  var(--text-primary);
+    --text:       var(--text-primary);
+}
+
+/* ── Dark Mode ─────────────────────────────────── */
+:root[data-theme='dark'] {
+    --bg-color:      #0f172a;   /* deep slate */
+    --surface-color: #1e293b;   /* slate 800 */
+    --surface-hover: #334155;   /* slate 700 */
+
+    --border-color: #334155;
+    --border-hover: #475569;
+
+    --text-primary:   #f8fafc;  /* soft slate white */
+    --text-secondary: #cbd5e1;  /* slate 300 */
+    --text-tertiary:  #94a3b8;  /* slate 400 */
+
+    --accent-glow:  rgba(99,102,241,0.25);
+    --accent-soft:  rgba(99,102,241,0.12);
+
+    --teal-glow:    rgba(14,165,233,0.2);
+    --rose-glow:    rgba(236,72,153,0.2);
+    --success-glow: rgba(16,185,129,0.2);
+
+    --grad-brand:    linear-gradient(135deg, #818cf8, #a78bfa, #38bdf8);
+    --grad-hero:     linear-gradient(135deg, #818cf8 0%, #a78bfa 50%, #38bdf8 100%);
+    --grad-warm:     linear-gradient(135deg, #f472b6, #fb923c);
+}
+

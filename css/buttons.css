@@ -1,0 +1,101 @@
+/* buttons.css – All Button Variants (vibrant) */
+
+.btn {
+    padding: 0.6rem 1.25rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    font-weight: 600; font-size: 0.9rem;
+    cursor: pointer; transition: all 0.18s ease;
+    display: inline-flex; align-items: center; justify-content: center;
+    gap: 0.5rem; outline-offset: 2px; text-decoration: none;
+    letter-spacing: -0.01em;
+}
+.btn:focus-visible { outline: 2px solid var(--accent); }
+.btn:active { transform: scale(0.97); }
+
+/* Primary – vibrant gradient with depth */
+.btn-primary {
+    background: var(--grad-brand);
+    color: #fff; border: none;
+    box-shadow: 0 4px 15px -3px var(--accent-glow), 0 4px 20px -2px rgba(99,102,241,0.3);
+}
+.btn-primary:hover {
+    opacity: 0.95;
+    box-shadow: 0 10px 25px -5px var(--accent-glow), 0 8px 30px -4px rgba(99,102,241,0.4);
+    transform: translateY(-2px);
+}
+
+/* Secondary – refined glassmorphism style */
+.btn-secondary {
+    background: var(--surface-hover); 
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(8px);
+}
+.btn-secondary:hover {
+    background: var(--surface-color);
+    border-color: var(--accent);
+    color: var(--accent);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Danger – soft red */
+.btn-danger { 
+    background: rgba(239, 68, 68, 0.05); 
+    color: var(--danger); 
+    border: 1px solid rgba(239, 68, 68, 0.1); 
+}
+.btn-danger:hover { 
+    background: var(--danger); 
+    color: white; 
+    border-color: transparent;
+    box-shadow: 0 4px 12px var(--danger-hover);
+}
+
+/* Icon-only – clean and responsive */
+.btn-icon {
+    padding: 0.6rem; background: var(--surface-hover);
+    color: var(--text-secondary); border-radius: 50%;
+    border: 1px solid var(--border-color);
+}
+.btn-icon:hover { 
+    color: var(--accent); 
+    background: var(--accent-soft); 
+    border-color: var(--accent);
+    transform: rotate(15deg);
+}
+
+/* Outline / dashed – subtle for secondary actions */
+.btn-outline {
+    background: transparent;
+    border: 1px dashed var(--border-hover);
+    color: var(--text-secondary);
+}
+.btn-outline:hover {
+    border-style: solid;
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-soft);
+}
+
+/* Accent solid */
+.btn-accent {
+    background: var(--accent); color: #fff; border: none;
+}
+.btn-accent:hover { 
+    background: var(--accent-hover); 
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px var(--accent-glow);
+}
+
+/* Theme Toggle Button Special Styling */
+.btn-theme {
+    width: 40px; height: 40px; border-radius: 50%;
+    padding: 0; font-size: 1.1rem;
+}
+
+/* Sizes */
+.btn-large { width: 100%; padding: 0.85rem 1.5rem; font-size: 1rem; border-radius: var(--radius-md); }
+.btn-sm    { padding: 0.35rem 0.75rem; font-size: 0.8rem; border-radius: var(--radius-sm); }
+

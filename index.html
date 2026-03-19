@@ -3,56 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QuizApp - Master Your Memory</title>
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome -->
+    <title>QuizApp – Master Japanese</title>
+    <meta name="description" content="An interactive quiz app to master Japanese vocabulary, JLPT reading, and more.">
+
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Styles -->
-    <link rel="stylesheet" href="style.css">
+    <!-- Google Material Symbols -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="css/buttons.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/forms.css">
+    <link rel="stylesheet" href="css/create-page.css">
+    <link rel="stylesheet" href="css/ai-bot.css">
+    <link rel="stylesheet" href="css/quiz-player.css">
+    <link rel="stylesheet" href="css/responsive.css">
 </head>
 <body>
-    <div class="glass-bg"></div>
 
-    <!-- Login Screen -->
+    <!-- ==================== LOGIN SCREEN ==================== -->
     <div id="login-screen" class="login-overlay active">
-        <div class="login-card glass-card">
+        <div class="login-card">
             <div class="logo-box">
                 <i class="fa-solid fa-brain"></i>
             </div>
             <h2>Welcome to QuizApp</h2>
-            <p style="color: var(--text-muted); margin-top: 0.5rem;">Master your memory effortlessly.</p>
-            <button class="btn btn-primary" id="btn-login" style="margin-top: 2.5rem; width: 100%;">
+            <p>Master Japanese vocabulary effortlessly.</p>
+
+            <button class="btn btn-primary" id="btn-login" style="margin-top:2.5rem;width:100%;">
                 <i class="fa-brands fa-google"></i> Sign in with Google
             </button>
-            <button class="btn btn-outline" id="btn-login-guest" style="margin-top: 1rem; width: 100%;">
+            <button class="btn btn-secondary" id="btn-login-guest" style="margin-top:0.75rem;width:100%;">
                 Continue as Guest (Local Only)
             </button>
         </div>
     </div>
 
-    <!-- Start Quiz Modal -->
+    <!-- ==================== START QUIZ MODAL ==================== -->
     <div id="start-modal" class="modal-overlay hidden">
-        <div class="modal-card glass-card">
+        <div class="modal-card">
             <h3 id="start-modal-title">Quiz Title</h3>
-            <p style="color: var(--text-muted); margin-bottom: 2rem;">How many questions would you like to answer?</p>
-            
+            <p style="color:var(--text-muted);margin-bottom:1.5rem;">Configure your quiz session.</p>
+
             <div class="input-group">
-                <select id="start-question-count" class="form-select">
-                    <!-- Options injected via JS -->
+                <label for="start-quiz-mode">Quiz Mode</label>
+                <select id="start-quiz-mode" class="form-select">
+                    <option value="vocabulary">Vocabulary (Reading / Translation)</option>
+                    <option value="speaking">Speaking (Pronunciation Check)</option>
+                    <option value="listening">Listening (Audio Comprehension)</option>
                 </select>
             </div>
-            
-            <div class="result-actions" style="margin-top: 1rem;">
+
+            <div class="input-group" id="difficulty-group">
+                <label for="start-quiz-difficulty">Difficulty</label>
+                <select id="start-quiz-difficulty" class="form-select">
+                    <option value="easy">Easy – English → Romaji</option>
+                    <option value="medium">Medium – Kana → Romaji / English</option>
+                    <option value="hard">Hard – Kana → Kana</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="start-question-count">Number of Questions</label>
+                <select id="start-question-count" class="form-select">
+                    <!-- Populated by JS -->
+                </select>
+            </div>
+
+            <div class="result-actions" style="margin-top:1.25rem;">
                 <button class="btn btn-secondary" id="btn-cancel-start">Cancel</button>
-                <button class="btn btn-primary" id="btn-confirm-start">Start Quiz</button>
+                <button class="btn btn-primary"   id="btn-confirm-start">
+                    <i class="fa-solid fa-play"></i> Start Quiz
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- Main Application UI -->
+    <!-- ==================== MAIN APP ==================== -->
     <div class="app-container hidden" id="main-app">
-        <!-- Sidebar / Navigation -->
+
+        <!-- Sidebar Navigation -->
         <nav class="sidebar">
             <div class="logo">
                 <i class="fa-solid fa-brain"></i>
@@ -60,41 +95,46 @@
             </div>
             <ul class="nav-links">
                 <li class="active" data-tab="dashboard">
-                    <i class="fa-solid fa-house"></i>
-                    <span>Dashboard</span>
+                    <span class="material-symbols-rounded">dashboard</span> <span>Dashboard</span>
                 </li>
                 <li data-tab="create-quiz">
-                    <i class="fa-solid fa-plus"></i>
-                    <span>Create Quiz</span>
+                    <span class="material-symbols-rounded">add_circle</span> <span>Create Quiz</span>
+                </li>
+                <li data-tab="create-jlpt">
+                    <span class="material-symbols-rounded">menu_book</span> <span>JLPT Reading</span>
                 </li>
             </ul>
         </nav>
 
-        <!-- Main Content Area -->
+        <!-- Main Content -->
         <main class="main-content">
-            <!-- Header -->
+
+            <!-- Page Header -->
             <header>
                 <h1 id="page-title">Dashboard</h1>
                 <div class="user-profile">
-                    <span id="user-display-name" style="margin-right: 1.5rem; font-weight: 500; font-size: 1rem; color: var(--primary);">Guest</span>
-                    <button class="btn btn-secondary" id="btn-logout" title="Logout">
-                        <i class="fa-solid fa-right-from-bracket"></i> Sign Out
+                    <button class="btn btn-icon btn-theme" id="btn-theme-toggle" title="Toggle Dark/Light Mode">
+                        <span class="material-symbols-rounded">dark_mode</span>
+                    </button>
+                    <span id="user-display-name">Guest</span>
+                    <button class="btn btn-secondary" id="btn-logout">
+                        <span class="material-symbols-rounded">logout</span> Sign Out
                     </button>
                 </div>
             </header>
 
-            <!-- Dashboard View -->
+            <!-- ===== DASHBOARD TAB ===== -->
             <section id="dashboard" class="tab-content active">
                 <div class="stats-row">
-                    <div class="stat-card glass-card">
-                        <div class="stat-icon"><i class="fa-solid fa-layer-group"></i></div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><span class="material-symbols-rounded">grid_view</span></div>
                         <div class="stat-info">
                             <h3>Total Quizzes</h3>
                             <p id="total-quizzes">0</p>
                         </div>
                     </div>
-                    <div class="stat-card glass-card">
-                        <div class="stat-icon"><i class="fa-solid fa-book-open"></i></div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><span class="material-symbols-rounded">translate</span></div>
                         <div class="stat-info">
                             <h3>Words Memorized</h3>
                             <p id="total-words">0</p>
@@ -104,133 +144,184 @@
 
                 <div class="section-header">
                     <h2>Your Quizzes</h2>
-                    <button class="btn btn-primary" id="btn-create-new">
-                        <i class="fa-solid fa-plus"></i> New Quiz
+                    <button class="btn btn-primary" id="btn-create-new-dash" style="padding-right:1.25rem">
+                        <span class="material-symbols-rounded">add</span> New Quiz
                     </button>
                 </div>
-                
+
                 <div class="quiz-grid" id="quiz-grid">
-                    <!-- Quizzes will be injected here via JS -->
+                    <!-- Cards injected by dashboard.js -->
                 </div>
             </section>
 
-            <!-- Create/Edit Quiz View -->
+            <!-- ===== CREATE VOCABULARY QUIZ TAB ===== -->
             <section id="create-quiz" class="tab-content">
-                <div class="form-card glass-card">
-                    <h2>Create a New Quiz</h2>
-                    <p class="subtitle">Name your quiz and start adding words, sentences, or data to test yourself.</p>
-                    
-                    <form id="quiz-form">
-                        <div class="input-group">
-                            <label for="quiz-name">Quiz Name</label>
-                            <input type="text" id="quiz-name" placeholder="e.g., Spanish Vocabulary, History Dates..." required>
-                        </div>
-                        <div class="input-group">
-                            <label for="quiz-desc">Description (Optional)</label>
-                            <textarea id="quiz-desc" placeholder="Briefly describe what this quiz is about..."></textarea>
-                        </div>
-                        
-                        <div class="divider"></div>
-
-                        <h3>Add Items (Q&A)</h3>
-                        <div class="add-item-container">
-                            <div class="input-row">
-                                <div class="input-group">
-                                    <label for="item-q">Prompt / Question / Word</label>
-                                    <input type="text" id="item-q" placeholder="e.g., 'Hola'">
+                <div class="create-layout">
+                    <div class="create-form-col">
+                        <div class="form-card">
+                            <h2>Create a New Quiz</h2>
+                            <p class="subtitle">Name your quiz, add vocabulary manually or use the AI Assistant.</p>
+                            <form id="quiz-form">
+                                <div class="create-section">
+                                    <div class="step-label"><span class="step-badge">1</span><h3>Quiz Info</h3></div>
+                                    <div class="input-group">
+                                        <label for="quiz-name">Quiz Name</label>
+                                        <input type="text" id="quiz-name" placeholder="e.g., Animals, Food, Colors…" required>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="quiz-desc">Description (optional)</label>
+                                        <textarea id="quiz-desc" placeholder="Briefly describe what this quiz covers."></textarea>
+                                    </div>
                                 </div>
-                                <div class="input-group">
-                                    <label for="item-a">Answer / Meaning</label>
-                                    <input type="text" id="item-a" placeholder="e.g., 'Hello'">
+                                <div class="create-section">
+                                    <div class="step-label"><span class="step-badge">2</span><h3>Add Vocabulary</h3></div>
+                                    <div class="add-item-container">
+                                        <div class="input-row">
+                                            <div class="input-group"><label>English</label><input type="text" id="item-english" placeholder="Hello"></div>
+                                            <div class="input-group"><label>Romaji</label><input type="text" id="item-romaji" placeholder="Konnichiwa"></div>
+                                            <div class="input-group"><label>Kana</label><input type="text" id="item-kana" placeholder="こんにちは"></div>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary" id="btnAddItem" style="margin-top:1rem;">Add Word</button>
+                                    </div>
+                                    <div class="chatgpt-import">
+                                        <button type="button" class="btn btn-outline" id="toggle-import" style="width:100%;margin-top:1rem;">Bulk Import (CSV)</button>
+                                        <div class="import-panel hidden" id="import-panel">
+                                            <p style="margin-bottom:0.5rem;color:var(--text-muted);font-size:0.85rem;">Format: <code>English, Romaji, Kana</code> (one per line)</p>
+                                            <textarea id="bulk-import-text" placeholder="Hello, Konnichiwa, こんにちは"></textarea>
+                                            <button type="button" class="btn btn-secondary" id="btn-process-import">Import</button>
+                                        </div>
+                                    </div>
+                                    <div class="items-preview-list" id="items-preview-list"></div>
                                 </div>
+                                <button type="submit" class="btn btn-primary btn-large">Save Quiz</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- AI Panel for Vocab -->
+                    <div class="ai-panel-col">
+                        <div class="ai-panel">
+                            <div class="ai-panel-header">
+                                <div class="ai-avatar"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                                <div><h4>Quiz AI</h4><p>Vocabulary Assistant</p></div>
                             </div>
-                            <button type="button" class="btn btn-secondary" id="btn-add-item">
-                                <i class="fa-solid fa-plus"></i> Add Item
-                            </button>
-                        </div>
-
-                        <!-- ChatGPT Paste Area -->
-                        <div class="chatgpt-import">
-                            <button type="button" class="btn btn-outline" id="toggle-import" style="width: 100%; margin-top: 1rem;">
-                                <i class="fa-solid fa-robot"></i> Import from ChatGPT / List
-                            </button>
-                            <div class="import-panel hidden" id="import-panel" style="margin-top: 1rem; padding: 1rem; background: rgba(0,0,0,0.2); border-radius: 8px;">
-                                <p style="margin-bottom: 0.5rem; color: var(--text-muted);"><small>Format: "1. Question: Answer1 / Answer2, 2. Question: Answer" or separate by lines.</small></p>
-                                <textarea id="bulk-import-text" rows="5" placeholder="1. Hello: Hola / Saludos, 2. Adios: Goodbye" style="width: 100%;"></textarea>
-                                <button type="button" class="btn btn-secondary mt-2" id="btn-process-import">Import</button>
+                            <div class="ai-chat-messages" id="ai-chat-messages"></div>
+                            <div class="ai-quick-actions">
+                                <button type="button" class="btn btn-sm btn-secondary" id="ai-btn-sample">View Sample</button>
+                                <button type="button" class="btn btn-sm btn-secondary" id="ai-btn-paste">Paste ChatGPT</button>
+                            </div>
+                            <div class="ai-input-row">
+                                <input type="text" id="ai-chat-input" placeholder="Type a topic... or use actions above">
+                                <button id="ai-send-btn"><i class="fa-solid fa-paper-plane"></i></button>
                             </div>
                         </div>
-
-                        <div class="items-preview-list" id="items-preview-list">
-                            <!-- Items preview will appear here -->
-                        </div>
-
-                        <button type="submit" class="btn btn-primary btn-large mt-4">
-                            <i class="fa-solid fa-save"></i> Save Quiz
-                        </button>
-                    </form>
+                        <button class="ai-generate-btn" id="ai-generate-btn" disabled>Generate Quiz from AI</button>
+                    </div>
                 </div>
             </section>
 
-            <!-- Take Quiz View -->
+            <!-- ===== JLPT READING QUIZ TAB ===== -->
+            <section id="create-jlpt" class="tab-content">
+                <div class="create-layout">
+                    <div class="create-form-col">
+                        <div class="form-card">
+                            <h2>Create JLPT Reading</h2>
+                            <p class="subtitle">Add a Japanese passage and custom comprehension questions.</p>
+                            <form id="jlpt-form">
+                                <div class="create-section">
+                                    <div class="step-label"><span class="step-badge">1</span><h3>Quiz Name</h3></div>
+                                    <div class="input-group">
+                                        <input type="text" id="jlpt-quiz-name" placeholder="e.g., JLPT N4 Reading 1" required>
+                                    </div>
+                                </div>
+                                <div class="create-section">
+                                    <div class="step-label"><span class="step-badge">2</span><h3>Japanese Passage</h3></div>
+                                    <div class="input-group">
+                                        <textarea id="jlpt-passage" placeholder="Enter Japanese reading passage..." required></textarea>
+                                    </div>
+                                </div>
+                                <div class="create-section">
+                                    <div class="step-label"><span class="step-badge">3</span><h3>Questions</h3></div>
+                                    <div class="add-item-container">
+                                        <div class="input-group"><label>Question Text</label><input type="text" id="jlpt-q-text" placeholder="Question?"></div>
+                                        <div class="input-row">
+                                            <div class="input-group"><label>Option 1 (Correct)</label><input type="text" id="jlpt-opt-1" placeholder="Correct Answer"></div>
+                                            <div class="input-group"><label>Option 2</label><input type="text" id="jlpt-opt-2"></div>
+                                            <div class="input-group"><label>Option 3</label><input type="text" id="jlpt-opt-3"></div>
+                                            <div class="input-group"><label>Option 4</label><input type="text" id="jlpt-opt-4"></div>
+                                        </div>
+                                        <button type="button" class="btn btn-secondary" id="btn-add-jlpt-q" style="margin-top:1rem;">Add Question</button>
+                                    </div>
+                                    <div class="items-preview-list" id="jlpt-questions-list"></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-large">Save JLPT Quiz</button>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- AI Panel for JLPT -->
+                    <div class="ai-panel-col">
+                        <div class="ai-panel">
+                            <div class="ai-panel-header">
+                                <div class="ai-avatar"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+                                <div><h4>Reading AI</h4><p>JLPT Assistant</p></div>
+                            </div>
+                            <div class="ai-chat-messages" id="jlpt-ai-messages"></div>
+                            <div class="ai-input-row">
+                                <input type="text" id="jlpt-ai-input" placeholder="Type a JLPT level (N5..N1)...">
+                                <button id="jlpt-ai-send"><i class="fa-solid fa-paper-plane"></i></button>
+                            </div>
+                        </div>
+                        <button class="ai-generate-btn" id="jlpt-ai-generate" disabled>Generate JLPT with AI</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ===== TAKE QUIZ TAB ===== -->
             <section id="take-quiz" class="tab-content">
                 <div class="quiz-header">
-                    <button class="btn btn-icon" id="btn-back-dashboard">
-                        <i class="fa-solid fa-arrow-left"></i> End Quiz
-                    </button>
+                    <button class="btn btn-icon" id="btn-back-dashboard"><i class="fa-solid fa-arrow-left"></i></button>
                     <h2 id="active-quiz-title">Quiz Title</h2>
                     <div class="quiz-meta-info">
                         <div class="timer" id="quiz-timer"><i class="fa-regular fa-clock"></i> <span id="quiz-timer-text">00:00</span></div>
                         <div class="progress-text"><span id="current-q-num">1</span> / <span id="total-q-num">10</span></div>
                     </div>
                 </div>
-
-                <div class="progress-bar">
-                    <div class="progress-fill" id="quiz-progress-fill" style="width: 0%;"></div>
-                </div>
-
-                <div class="question-card glass-card">
-                    <h3 id="question-text">Loading question...</h3>
-                    <div class="options-grid" id="options-grid">
-                        <!-- Options injected here -->
+                <div class="progress-bar"><div class="progress-fill" id="quiz-progress-fill" style="width:0%"></div></div>
+                <div class="question-card">
+                    <div id="jlpt-passage-display" class="hidden">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.75rem;">
+                            <span>Reading Passage</span>
+                            <button class="btn btn-primary" id="btn-play-jlpt-audio" style="border-radius:50%;width:38px;height:38px;padding:0;font-size:1rem;"><i class="fa-solid fa-volume-high"></i></button>
+                        </div>
+                        <p id="jlpt-passage-text"></p>
                     </div>
+                    <div id="media-controls" class="hidden"><button class="btn btn-primary" id="btn-play-audio"><i class="fa-solid fa-volume-high"></i></button></div>
+                    <h3 id="question-text">Loading question…</h3>
+                    <div id="speaking-controls" class="hidden"><button class="btn" id="btn-mic"><i class="fa-solid fa-microphone"></i></button><p id="mic-status">Tap mic to speak</p></div>
+                    <div class="options-grid" id="options-grid"></div>
                 </div>
-
-                <div class="quiz-results glass-card hidden" id="quiz-results">
-                    <h2>Quiz Completed!</h2>
-                    <div class="score-circle">
-                        <span id="final-score">0</span><small>%</small>
-                    </div>
+                <!-- Quiz Results -->
+                <div class="quiz-results hidden" id="quiz-results">
+                    <h2>Quiz Completed! 🎉</h2>
+                    <div class="score-circle"><span id="final-score">0</span>%</div>
                     <div class="results-stats">
-                        <div class="stat-box">
-                            <i class="fa-solid fa-check-circle" style="color: var(--secondary); margin-bottom: 0.5rem; font-size: 1.5rem;"></i>
-                            <p>Correct</p>
-                            <strong><span id="score-correct">0</span> / <span id="score-total">0</span></strong>
-                        </div>
-                        <div class="stat-box">
-                            <i class="fa-regular fa-clock" style="color: var(--primary); margin-bottom: 0.5rem; font-size: 1.5rem;"></i>
-                            <p>Time Taken</p>
-                            <strong id="score-time">00:00</strong>
-                        </div>
+                        <div class="stat-box"><p>Correct</p><strong><span id="score-correct">0</span> / <span id="score-total">0</span></strong></div>
+                        <div class="stat-box"><p>Time Taken</p><strong id="score-time">00:00</strong></div>
                     </div>
-                    <p id="score-message">Great job completed the quiz.</p>
+                    <p id="score-message">Great job!</p>
                     <div class="result-actions">
-                        <button class="btn btn-secondary" id="btn-restart-quiz">Restart Setup</button>
-                        <button class="btn btn-primary" id="btn-finish-quiz">Back to Dashboard</button>
+                        <button class="btn btn-secondary" id="btn-restart-quiz">Restart</button>
+                        <button class="btn btn-primary" id="btn-finish-quiz">Dashboard</button>
                     </div>
                 </div>
             </section>
-
         </main>
     </div>
 
-    <!-- Firebase SDK Setup -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
-    
-    <!-- Custom Scripts -->
     <script src="firebase-config.js"></script>
-    <script src="app.js"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

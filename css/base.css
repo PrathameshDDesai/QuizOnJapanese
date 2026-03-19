@@ -1,0 +1,54 @@
+/* base.css – Reset & Body */
+*, *::before, *::after {
+    margin: 0; padding: 0; box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    line-height: 1.5;
+}
+
+.glass-bg { display: none; }
+
+.glass-card {
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.2);
+    padding: 2rem;
+}
+
+.hidden { display: none !important; }
+
+.divider { height: 1px; background: var(--border-color); margin: 2rem 0; }
+
+/* Animations */
+@keyframes subtleFade {
+    from { opacity: 0; transform: translateY(4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-record {
+    0%   { box-shadow: 0 0 0 0   rgba(239,68,68,0.4); }
+    70%  { box-shadow: 0 0 0 15px rgba(239,68,68,0); }
+    100% { box-shadow: 0 0 0 0   rgba(239,68,68,0); }
+}
+
+@keyframes typing-dot {
+    0%, 80%, 100% { transform: translateY(0); opacity: .4; }
+    40%            { transform: translateY(-6px); opacity: 1; }
+}
+
+.btn.recording {
+    background: var(--danger) !important;
+    animation: pulse-record 1.5s infinite;
+    color: white; border-color: transparent;
+}
+
+.mt-2 { margin-top: 0.5rem; }
+.mt-4 { margin-top: 1rem; }
