@@ -1,31 +1,43 @@
-# QuizApp - Master Your Memory
+# QuizOnJapanese
 
-A sleek, modern web application designed to help you remember words, learn new languages, or memorize data. 
+A sleek, modern web application for mastering Japanese vocabulary and JLPT reading comprehension. Features a glassmorphism-inspired dark-mode UI, AI-assisted quiz generation, and Firebase cloud sync.
 
 ## Features
-- **Modern User Interface**: A dynamic, glassmorphism-inspired dark-mode design.
-- **Custom Quizzes**: Name and describe your quizzes easily.
-- **ChatGPT Integration**: Bulk import data directly from ChatGPT outputs (comma-separated or colon-separated lists).
-- **Multiple Choice Generation**: Automatically creates distractors for a seamless multiple-choice quiz experience.
-- **Firebase Ready**: Easily deployable with cloud sync (or perfectly functional locally via `localStorage`).
+
+- **Japanese Vocabulary Quizzes**: Practice English ↔ Romaji ↔ Kana with auto-generated multiple-choice distractors.
+- **JLPT Reading Comprehension**: Add Japanese passages and custom comprehension questions for N5–N1 practice.
+- **Multiple Quiz Modes**: Vocabulary, Speaking (pronunciation check), and Listening (audio comprehension).
+- **Difficulty Levels**: Easy (English → Romaji), Medium (Kana → Romaji/English), Hard (Kana → Kana).
+- **AI Assistant**: Generate vocabulary lists or JLPT reading passages using the built-in AI chatbot.
+- **Bulk CSV Import**: Import vocabulary in bulk with `English, Romaji, Kana` format (one entry per line).
+- **Google Sign-In & Guest Mode**: Sign in with Google for cloud sync, or continue as a guest using `localStorage`.
+- **Dark / Light Mode**: Toggle between themes at any time.
+- **Firebase Cloud Sync**: Quizzes saved to Firestore and synced across devices when signed in.
 
 ## Getting Started
 
 ### 1. Firebase Setup (Cloud Saving)
-Out of the box, the app will work completely offline using your browser's local storage. To sync across devices, connect it to Firebase:
+Out of the box, the app works completely offline using your browser's local storage. To sync across devices, connect it to Firebase:
 1. Go to the [Firebase Console](https://console.firebase.google.com/).
-2. Create a new Project.
-3. Build a **Firestore Database** (Start in **Test Mode** for initial development, then secure rules later).
-4. Register a Web App in settings.
-5. Copy the SDK configuration snippet provided.
-6. Open `firebase-config.js` and replace the `firebaseConfig` object with your details.
+2. Create a new project.
+3. Build a **Firestore Database** (start in **Test Mode** for development, then secure rules for production).
+4. Enable **Google Sign-In** under **Authentication > Sign-in method**.
+5. Register a Web App in project settings.
+6. Copy the SDK configuration snippet provided.
+7. Open `firebase-config.js` and replace the `firebaseConfig` object with your details.
 
-### 2. Deployment (GitHub Pages)
-This app is built natively in HTML, CSS, and vanilla JS, meaning no build steps are required.
-1. Initialize a Git repository in this folder and push the code to a GitHub repository.
-2. In your GitHub repository, go to **Settings > Pages**.
+### 2. Local Development
+```bash
+npm install
+npm run dev   # starts nodemon server at http://localhost:3000
+```
+
+### 3. Deployment (GitHub Pages)
+This app is built with HTML, CSS, and vanilla JS — no build step required.
+1. Push the code to a GitHub repository.
+2. Go to **Settings > Pages** in your repository.
 3. Under **Source**, select `Deploy from a branch`.
 4. Select `main` branch and `/root` folder, then click **Save**.
-5. Wait a few minutes, and your site will be live!
+5. Your site will be live in a few minutes.
 
-Enjoy learning!
+Enjoy learning Japanese! 🇯🇵
